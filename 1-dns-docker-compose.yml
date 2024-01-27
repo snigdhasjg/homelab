@@ -7,7 +7,8 @@ services:
     restart: unless-stopped
     volumes:
       - adguard_data:/opt/adguardhome
-      - /home/joe/.cert/adguard.snigji.home:/cert
+      - /home/joe/.cert/adguard.snigji.com:/cert
+      - /home/joe/.cert/ca.crt:/usr/local/share/ca-certificates/ca.crt
     networks:
       default:
         ipv4_address: 192.168.74.100
@@ -20,7 +21,7 @@ services:
       TZ: Asia/Kolkata
       BIND9_USER: root
     volumes:
-      - ./config:/etc/bind
+      - /home/joe/docker_config/bind9:/etc/bind
       - bind_cache:/var/cache/bind
       - bind_record:/var/lib/bind
     networks:

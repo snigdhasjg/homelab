@@ -2,9 +2,9 @@
 
 set -x
 
-export DOMAIN_NAME="adguard.snigji.home"
-export IP_ADDRESS="192.168.74.100"
-export NAME="SnigJi AdGuard Home"
+export DOMAIN_NAME="ns.snigji.com"
+export IP_ADDRESS="192.168.74.101"
+export NAME="SnigJi Name Server"
 
 mkdir -p tmp
 
@@ -28,18 +28,18 @@ openssl x509 \
   -sha256 \
   -days 3650 \
   -in "tmp/${DOMAIN_NAME}.csr" \
-  -CA ca.pem \
-  -CAkey ca-key.pem \
+  -CA /home/joe/.cert/ca.crt \
+  -CAkey /home/joe/.cert/ca-key.pem \
   -out "tmp/${DOMAIN_NAME}.single.crt" \
   -extfile "tmp/${DOMAIN_NAME}_signing.conf" \
-  -CAcreateserial
+  -CAserial /home/joe/.cert/ca.srl 
+  # -CAcreateserial # for the 1st time use this
 
-cat ca.pem > "tmp/${DOMAIN_NAME}.crt"
 cat "tmp/${DOMAIN_NAME}.single.crt" >> "tmp/${DOMAIN_NAME}.crt"
-
-rm ca.srl
-rm -rf tmp
+# cat ca.crt > "tmp/${DOMAIN_NAME}.crt"
 
 mkdir -p /home/joe/.cert/${DOMAIN_NAME}
-mv "tmp/${DOMAIN_NAME}.crt" /home/joe/.cert/${DOMAIN_NAME}/cert.crt
-mv "tmp/${DOMAIN_NAME}.key" /home/joe/.cert/${DOMAIN_NAME}/key.pem
+mv "tmp/${DOMAIN_NAME}.crt" /home/joe/.cert/${DOMAIN_NAME}/
+mv "tmp/${DOMAIN_NAME}.key" /home/joe/.cert/${DOMAIN_NAME}/
+
+rm -rf tmp
