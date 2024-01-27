@@ -10,11 +10,30 @@ services:
       - /home/joe/.cert:/cert
     networks:
       default:
-        ipv4_address: 192.168.74.100
+        ipv4_address: 192.168.74.54
+
+  bind9:
+    container_name: bind9
+    image: ubuntu/bind9:9.18-23.10_edge
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Kolkata
+      BIND9_USER: root
+    volumes:
+      - ./config:/etc/bind
+      - bind_cache:/var/cache/bind
+      - bind_record:/var/lib/bind
+    networks:
+      default:
+        ipv4_address: 192.168.74.53
 
 volumes:
   adguard_data:
     name: adguard_data
+  bind_cache:
+    name: bind_cache
+  bind_record:
+    name: bind_record
 
 networks:
   default:
