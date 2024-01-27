@@ -1,0 +1,19 @@
+$TTL 2d ;
+
+$ORIGIN snigji.home. ;
+
+@               IN      SOA     ns.snigji.home. info.snigji.home. (
+                                2024012700  ; serial
+                                12h         ; refresh
+                                15m         ; retry
+                                3w          ; expire
+                                2h          ; minimum TTL
+                                )
+
+                IN      NS      ns.snigji.home.
+
+ns              IN      A       192.168.74.101
+
+; -- Add DNS records below
+
+adguard         IN      A       192.168.74.100

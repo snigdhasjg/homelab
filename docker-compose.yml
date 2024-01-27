@@ -10,7 +10,7 @@ services:
       - /home/joe/.cert:/cert
     networks:
       default:
-        ipv4_address: 192.168.74.54
+        ipv4_address: 192.168.74.100
 
   bind9:
     container_name: bind9
@@ -25,7 +25,7 @@ services:
       - bind_record:/var/lib/bind
     networks:
       default:
-        ipv4_address: 192.168.74.53
+        ipv4_address: 192.168.74.101
 
 volumes:
   adguard_data:
