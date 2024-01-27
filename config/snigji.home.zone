@@ -1,4 +1,4 @@
-$TTL 2d ;
+$TTL 1h ;
 
 $ORIGIN snigji.home. ;
 
@@ -17,4 +17,3 @@ ns              IN      A       192.168.74.101
 ; -- Add DNS records below
 
 adguard         IN      A       192.168.74.100
-test            IN      A       adguard_home
