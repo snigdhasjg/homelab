@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     volumes:
       - adguard_data:/opt/adguardhome
-      - /home/joe/.cert:/cert
+      - /home/joe/.cert/adguard.snigji.home:/cert
     networks:
       default:
         ipv4_address: 192.168.74.100
