@@ -2,9 +2,9 @@
 
 set -x
 
-export DOMAIN_NAME="ns.snigji.com"
-export IP_ADDRESS="192.168.74.101"
-export NAME="SnigJi Name Server"
+export DOMAIN_NAME="docker.snigji.com"
+export IP_ADDRESS="192.168.74.2"
+export NAME="SnigJi Docker UI"
 
 mkdir -p tmp
 
