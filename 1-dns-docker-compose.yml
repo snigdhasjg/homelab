@@ -7,8 +7,8 @@ services:
     restart: unless-stopped
     volumes:
       - adguard_data:/opt/adguardhome
-      - /home/joe/.cert/adguard.snigji.com:/cert
-      - /home/joe/.cert/ca.crt:/usr/local/share/ca-certificates/ca.crt
+      - /var/ssl/adguard.snigji.com:/cert
+      - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt
     networks:
       default:
         ipv4_address: 192.168.74.100

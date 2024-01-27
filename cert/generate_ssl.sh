@@ -3,9 +3,9 @@
 set -e
 set -x
 
-export DOMAIN_NAME="docker.snigji.com"
-export IP_ADDRESS="192.168.74.2"
-export NAME="SnigJi Docker UI"
+export DOMAIN_NAME="adguard.snigji.com"
+export IP_ADDRESS="192.168.74.100"
+export NAME="SnigJi AdGuard Home"
 CERTIFICATE_PATH=${CERTIFICATE_BASEPATH:-./generated}/${DOMAIN_NAME}
 CA_CERTIFICATE_PATH=${CERTIFICATE_BASEPATH:-./generated}/ca
 
@@ -34,12 +34,3 @@ openssl x509 \
   -extensions v3_server \
   -CAserial ${CA_CERTIFICATE_PATH}/ca.crt.srl
   # -CAcreateserial # for the 1st time use this
-
-# cat "tmp/${DOMAIN_NAME}.single.crt" >> "tmp/${DOMAIN_NAME}.crt"
-# # cat ca.crt > "tmp/${DOMAIN_NAME}.crt"
-
-# mkdir -p /home/joe/.cert/${DOMAIN_NAME}
-# mv "tmp/${DOMAIN_NAME}.crt" /home/joe/.cert/${DOMAIN_NAME}/
-# mv "tmp/${DOMAIN_NAME}.key" /home/joe/.cert/${DOMAIN_NAME}/
-
-# rm -rf tmp
