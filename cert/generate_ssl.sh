@@ -32,7 +32,8 @@ openssl x509 \
   -out ${CERTIFICATE_PATH}/ssl.crt.pem \
   -extfile ${CERTIFICATE_PATH}/ssl_config.conf \
   -extensions v3_server \
-  -CAcreateserial # for the 1st time use this
+  -CAserial ${CA_CERTIFICATE_PATH}/ca.crt.srl
+  # -CAcreateserial # for the 1st time use this
 
 # cat "tmp/${DOMAIN_NAME}.single.crt" >> "tmp/${DOMAIN_NAME}.crt"
 # # cat ca.crt > "tmp/${DOMAIN_NAME}.crt"
