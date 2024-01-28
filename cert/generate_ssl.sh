@@ -1,15 +1,22 @@
 #!/bin/bash
 
 set -e
-set -x
 
-export DOMAIN_NAME="adguard.snigji.com"
-export IP_ADDRESS="192.168.74.100"
-export NAME="SnigJi AdGuard Home"
+read -e -p "Domain name: " -i "test.snigji.com" DOMAIN_NAME
+export DOMAIN_NAME
+read -e -p "IP address: " -i "192.168.1.1" IP_ADDRESS
+export IP_ADDRESS
+read -e -p "Application Name: " -i "SnigJi Test" NAME
+export NAME
+
 CERTIFICATE_PATH=${CERTIFICATE_BASEPATH:-./generated}/${DOMAIN_NAME}
 CA_CERTIFICATE_PATH=${CERTIFICATE_BASEPATH:-./generated}/ca
 
-rm -rf ${CERTIFICATE_PATH}
+if [ -d "${CERTIFICATE_PATH}" ]; then
+  echo "$CERTIFICATE_PATH exist. Not generating SSL"
+  exit 1
+fi
+
 mkdir -p ${CERTIFICATE_PATH}
 
 cat ssl_config.conf |\
