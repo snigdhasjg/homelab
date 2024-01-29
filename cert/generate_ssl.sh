@@ -4,7 +4,7 @@ set -e
 
 read -e -p "Domain name: " -i "test.snigji.com" DOMAIN_NAME
 export DOMAIN_NAME
-read -e -p "IP address: " -i "192.168.1.1" IP_ADDRESS
+read -e -p "IP address: " -i "192.168.74.0" IP_ADDRESS
 export IP_ADDRESS
 read -e -p "Application Name: " -i "SnigJi Test" NAME
 export NAME

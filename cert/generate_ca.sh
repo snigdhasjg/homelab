@@ -17,7 +17,7 @@ mkdir -p ${CERTIFICATE_PATH}_private
 openssl genrsa -aes256 -out ${CERTIFICATE_PATH}_private/ca.key.pem 4096
 
 openssl req \
-  -config ${CERTIFICATE_PATH}_private/ca_config.conf \
+  -config ./ca_config.conf \
   -key ${CERTIFICATE_PATH}_private/ca.key.pem \
   -x509 \
   -days 3650 \

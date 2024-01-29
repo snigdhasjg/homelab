@@ -11,6 +11,7 @@ services:
       - /var/ssl/file.snigji.com:/var/ssl/cert
       - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt
       # Mount more volume on /srv to edit
+      - filebrowser_srv:/srv
       - bind_config:/srv/bind9
     command:
       - "-d"
@@ -33,6 +34,8 @@ volumes:
     external: true
   filebrowser_data:
     name: filebrowser_data
+  filebrowser_srv:
+    name: filebrowser_srv
 
 networks:
   default:
