@@ -23,7 +23,7 @@ services:
       TZ: Asia/Kolkata
       BIND9_USER: root
     volumes:
-      - /home/joe/docker_config/bind9:/etc/bind
+      - bind_config:/etc/bind
       - bind_cache:/var/cache/bind
       - bind_record:/var/lib/bind
     networks:
@@ -37,6 +37,8 @@ volumes:
     name: bind_cache
   bind_record:
     name: bind_record
+  bind_config:
+    name: bind_config
 
 networks:
   default:

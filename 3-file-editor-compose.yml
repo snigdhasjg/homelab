@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  filebrowser:
+    container_name: filebrowser
+    hostname: filebrowser
+    image: filebrowser/filebrowser:v2.27.0
+    restart: unless-stopped
+    volumes:
+      - filebrowser_data:/data
+      - /var/ssl/file.snigji.com:/var/ssl/cert
+      - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt
+      # Mount more volume on /srv to edit
+      - bind_config:/srv/bind9
+    command:
+      - "-d"
+      - "/data/database.db"
+      - "-t"
+      - "/var/ssl/cert/ssl.crt.pem"
+      - "-k"
+      - "/var/ssl/cert/ssl.key.pem"
+      - "-p"
+      - "443"
+    healthcheck:
+      test: ["NONE"]
+    networks:
+      default:
+        ipv4_address: 192.168.74.103
+
+volumes:
+  bind_config:
+    name: bind_config
+    external: true
+  filebrowser_data:
+    name: filebrowser_data
+
+networks:
+  default:
+    name: homelab
+    external: true
