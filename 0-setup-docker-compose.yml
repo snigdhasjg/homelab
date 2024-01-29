@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  portainer:
+    container_name: portainer
+    hostname: portainer
+    image: portainer/portainer-ce:linux-arm64-2.19.4
+    restart: always
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/ssl/docker.snigji.com:/var/ssl/cert:ro
+    command:
+      - "--http-disabled"
+      - "--bind-https"
+      - ":443"
+      - "--sslcert"
+      - "/var/ssl/cert/ssl.crt.pem"
+      - "--sslkey"
+      - "/var/ssl/cert/ssl.key.pem"
+    networks:
+      default:
+        ipv4_address: 192.168.74.2
+
+volumes:
+  portainer_data:
+    name: portainer_data
+
+networks:
+  default:
+    name: homelab
+    external: true

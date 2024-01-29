@@ -3,11 +3,12 @@ version: "3.9"
 services:
   adguard_home:
     container_name: adguard_home
+    hostname: adguard_home
     image: adguard/adguardhome:v0.107.43
     restart: unless-stopped
     volumes:
       - adguard_data:/opt/adguardhome
-      - /var/ssl/adguard.snigji.com:/cert
+      - /var/ssl/adguard.snigji.com:/var/ssl/cert
       - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt
     networks:
       default:
@@ -15,6 +16,7 @@ services:
 
   bind9:
     container_name: bind9
+    hostname: bind9
     image: ubuntu/bind9:9.18-23.10_edge
     restart: unless-stopped
     environment:
