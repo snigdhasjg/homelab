@@ -12,7 +12,7 @@ services:
       - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt
     networks:
       default:
-        ipv4_address: 192.168.74.100
+        ipv4_address: 192.168.73.200
 
   bind9:
     container_name: bind9
@@ -28,7 +28,7 @@ services:
       - bind_record:/var/lib/bind
     networks:
       default:
-        ipv4_address: 192.168.74.101
+        ipv4_address: 192.168.73.201
 
 volumes:
   adguard_data:
@@ -42,5 +42,5 @@ volumes:
 
 networks:
   default:
-    name: homelab
+    name: homelab_macvlan
     external: true

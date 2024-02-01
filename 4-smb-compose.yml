@@ -3,18 +3,20 @@ version: "3.9"
 services:
   samba:
     container_name: samba
-    hostname: samba
+    hostname: NASty
     image: ghcr.io/servercontainers/samba:latest
     restart: always
+    cap_add:
+      - CAP_NET_ADMIN
     environment:
-      MODEL: 'MacPro7,1'
-      AVAHI_NAME: 'LOLDriveNetwork'
+      MODEL: 'MacPro7,1@ECOLOR=226,226,224'
+      AVAHI_NAME: 'NASty'
 
       SAMBA_CONF_LOG_LEVEL: 3
 
-      WSDD2_DISABLE: 1
-      AVAHI_DISABLE: 1
-      NETBIOS_DISABLE: 1
+      # WSDD2_DISABLE: 1
+      # AVAHI_DISABLE: 1
+      # NETBIOS_DISABLE: 1
 
       GROUP_family: 1073
 
@@ -31,12 +33,12 @@ services:
           read only = no
           browseable = yes
     volumes:
-      - /etc/avahi/services/:/external/avahi
+      # - /etc/avahi/services/:/external/avahi
       # NAS Mount
-      - samba_share:/shares/public
+      - samba_share:/shares
     networks:
       default:
-        ipv4_address: 192.168.74.104
+        ipv4_address: 192.168.73.194
 
 volumes:
   samba_share:
@@ -44,5 +46,5 @@ volumes:
 
 networks:
   default:
-    name: homelab
+    name: homelab_macvlan
     external: true

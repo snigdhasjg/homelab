@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  httpd:
+    container_name: httpd
+    hostname: httpd
+    image: httpd:2.4.58-alpine3.19
+
+networks:
+  default:
+    name: homelab_macvlan
+    external: true
