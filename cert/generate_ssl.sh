@@ -26,7 +26,7 @@ cat ssl_config.conf |\
 openssl req \
   -config ${CERTIFICATE_PATH}/ssl_config.conf \
   -new \
-  -newkey rsa:2048 \
+  -newkey rsa:4096 \
   -keyout ${CERTIFICATE_PATH}/ssl.key.pem \
   -out ${CERTIFICATE_PATH}/ssl.csr
 
