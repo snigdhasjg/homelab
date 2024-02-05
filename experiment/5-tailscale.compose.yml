@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  tailscale:
+    container_name: tailscale
+    hostname: tailscale
+    image: ghcr.io/tailscale/tailscale:v1.58.2
+    restart: unless-stopped
+    environment:
+      TS_AUTH_ONCE: true
+      TS_AUTHKEY: tskey-auth-kvKCmr6CNTRL-fjhCGNZFmZ3yTcX8eYo1Z3YVVHfeMfky
+      TS_HOSTNAME: pi5-docker
+      TS_ROUTES: 192.168.73.0/24
+      TS_STATE_DIR: /data
+      TS_EXTRA_ARGS: "--accept-routes --advertise-exit-node --advertise-connector"
+    volumes:
+      - tailscale_data:/data
+    networks:
+      default:
+        ipv4_address: 192.168.73.195
+
+volumes:
+  tailscale_data:
+    name: tailscale_data
+
+networks:
+  default:
+    name: homelab_macvlan
+    external: true
