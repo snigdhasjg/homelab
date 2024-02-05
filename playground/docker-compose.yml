@@ -6,7 +6,3 @@ services:
     hostname: httpd
     image: httpd:2.4.58-alpine3.19
 
-networks:
-  default:
-    name: homelab_macvlan
-    external: true

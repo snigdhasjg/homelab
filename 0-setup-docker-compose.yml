@@ -20,7 +20,7 @@ services:
       - "/var/ssl/cert/ssl.key.pem"
     networks:
       default:
-        ipv4_address: 192.168.73.192
+        ipv4_address: 192.168.74.192
 
 volumes:
   portainer_data:
@@ -28,5 +28,5 @@ volumes:
 
 networks:
   default:
-    name: homelab_macvlan
+    name: homelab_ipvlan_l3
     external: true

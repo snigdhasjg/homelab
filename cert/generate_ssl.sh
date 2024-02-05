@@ -4,8 +4,10 @@ set -e
 
 read -e -p "Domain name: " -i "test.snigji.com" DOMAIN_NAME
 export DOMAIN_NAME
-read -e -p "IP address: " -i "192.168.73.200" IP_ADDRESS
-export IP_ADDRESS
+read -e -p "Primary IP address: " -i "192.168.74.200" PRIMARY_IP_ADDRESS
+export PRIMARY_IP_ADDRESS
+read -e -p "Secondary IP address: " -i "192.168.73.200" SECONDARY_IP_ADDRESS
+export SECONDARY_IP_ADDRESS
 read -e -p "Application Name: " -i "SnigJi Test" NAME
 export NAME
 

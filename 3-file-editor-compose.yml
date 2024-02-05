@@ -28,7 +28,7 @@ services:
       test: ["NONE"]
     networks:
       default:
-        ipv4_address: 192.168.73.193
+        ipv4_address: 192.168.74.193
 
 volumes:
   bind_config:
@@ -47,5 +47,5 @@ volumes:
 
 networks:
   default:
-    name: homelab_macvlan
+    name: homelab_ipvlan_l3
     external: true
