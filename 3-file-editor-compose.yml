@@ -15,6 +15,8 @@ services:
       - bind_config:/srv/bind9
       - adguard_data:/srv/adguard
       - portainer_data:/srv/portainer
+      - jellyfin_config:/srv/jellyfin
+      - qbittorrent_config:/srv/qbittorrent
     command:
       - "-d"
       - "/data/database.db"
@@ -39,6 +41,12 @@ volumes:
     external: true
   portainer_data:
     name: portainer_data
+    external: true
+  jellyfin_config:
+    name: jellyfin_config
+    external: true
+  qbittorrent_config:
+    name: qbittorrent_config
     external: true
   filebrowser_data:
     name: filebrowser_data

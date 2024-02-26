@@ -1,8 +1,27 @@
 version: '3.9'
 
 services:
-  httpd:
-    container_name: httpd
-    hostname: httpd
-    image: httpd:2.4.58-alpine3.19
+  jellyfin:
+    container_name: jellyfin
+    hostname: jellyfin
+    image: jellyfin/jellyfin:10.8.13-1
+    volumes:
+      - jellyfin_config:/config
+      - jellyfin_cache:/cache
+      - /mnt/nasty/share/media:/media
+      - /var/ssl/media.snigji.com:/var/ssl/cert
+      - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt
+    networks:
+      default:
+        ipv4_address: 192.168.74.195
 
+volumes:
+  jellyfin_config:
+    name: jellyfin_config
+  jellyfin_cache:
+    name: jellyfin_cache
+
+networks:
+  default:
+    name: homelab_ipvlan_l3
+    external: true

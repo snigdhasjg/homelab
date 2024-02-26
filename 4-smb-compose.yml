@@ -5,7 +5,7 @@ services:
     container_name: samba
     hostname: NASty
     image: ghcr.io/servercontainers/samba:latest
-    restart: always
+    restart: unless-stopped
     cap_add:
       - CAP_NET_ADMIN
     environment:
