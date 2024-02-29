@@ -14,12 +14,12 @@ export NAME
 CERTIFICATE_PATH=${CERTIFICATE_BASEPATH:-./generated}/${DOMAIN_NAME}
 CA_CERTIFICATE_PATH=${CERTIFICATE_BASEPATH:-./generated}/ca
 
-if [ -d "${CERTIFICATE_PATH}" ]; then
+mkdir -p ${CERTIFICATE_PATH}
+
+if find "${CERTIFICATE_PATH}" -mindepth 1 -maxdepth 1 | read >> /dev/null 2>&1; then
   echo "$CERTIFICATE_PATH exist. Not generating SSL"
   exit 1
 fi
-
-mkdir -p ${CERTIFICATE_PATH}
 
 cat ssl_config.conf |\
  awk '{ for (a in ENVIRON) gsub("__" _ a _ "__",ENVIRON[a]); print }' \
@@ -34,7 +34,7 @@ openssl req \
 
 openssl x509 \
   -req \
-  -days 3650 \
+  -days 360 \
   -in ${CERTIFICATE_PATH}/ssl.csr \
   -CA ${CA_CERTIFICATE_PATH}/ca.crt.pem \
   -CAkey ${CA_CERTIFICATE_PATH}_private/ca.key.pem \
@@ -43,3 +43,10 @@ openssl x509 \
   -extensions v3_server \
   -CAserial ${CA_CERTIFICATE_PATH}/ca.crt.srl
   # -CAcreateserial # for the 1st time use this
+
+openssl pkcs12 \
+  -export \
+  -out ${CERTIFICATE_PATH}/ssl.p12 \
+  -passout pass: \
+  -inkey ${CERTIFICATE_PATH}/ssl.key.pem \
+  -in ${CERTIFICATE_PATH}/ssl.crt.pem
