@@ -1,0 +1,112 @@
+version: '3.9'
+
+services:
+  photoprism:
+    image: photoprism/photoprism:231128
+    container_name: photoprism
+    hostname: photoprism
+    # restart: unless-stopped
+    stop_grace_period: 10s
+    depends_on:
+      - mariadb
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    environment:
+      ## https://docs.photoprism.app/getting-started/config-options/
+      PHOTOPRISM_ADMIN_USER: "joe"
+      PHOTOPRISM_ADMIN_PASSWORD: "insecure"
+      PHOTOPRISM_AUTH_MODE: "password"
+
+      PHOTOPRISM_SITE_URL: "https://photos.snigji.com/"
+      PHOTOPRISM_HTTP_PORT: 443
+      PHOTOPRISM_DISABLE_TLS: "false"
+      PHOTOPRISM_DEFAULT_TLS: "false"
+      PHOTOPRISM_TLS_CERT: "ssl.crt.pem"
+      PHOTOPRISM_TLS_KEY: "ssl.key.pem"
+
+      PHOTOPRISM_ORIGINALS_LIMIT: 5000               # file size limit for originals in MB (increase for high-res video)
+      PHOTOPRISM_HTTP_COMPRESSION: "gzip"            # improves transfer speed and bandwidth utilization (none or gzip)
+      PHOTOPRISM_WORKERS: 2                          # limits the number of indexing workers to reduce system load
+      PHOTOPRISM_LOG_LEVEL: "warning"                # log level: trace, debug, info, warning, error, fatal, or panic
+      PHOTOPRISM_READONLY: "false"                   # do not modify originals directory (reduced functionality)
+      PHOTOPRISM_EXPERIMENTAL: "false"               # enables experimental features
+      PHOTOPRISM_DISABLE_CHOWN: "false"              # disables updating storage permissions via chmod and chown on startup
+      PHOTOPRISM_DISABLE_WEBDAV: "false"             # disables built-in WebDAV server
+      PHOTOPRISM_DISABLE_SETTINGS: "false"           # disables Settings in Web UI
+      PHOTOPRISM_DISABLE_TENSORFLOW: "false"         # disables all features depending on TensorFlow
+      PHOTOPRISM_DISABLE_FACES: "false"              # disables face detection and recognition (requires TensorFlow)
+      PHOTOPRISM_DISABLE_CLASSIFICATION: "false"     # disables image classification (requires TensorFlow)
+      PHOTOPRISM_DISABLE_VECTORS: "false"            # disables vector graphics support
+      PHOTOPRISM_DISABLE_RAW: "false"                # disables indexing and conversion of RAW images
+      PHOTOPRISM_RAW_PRESETS: "false"                # enables applying user presets when converting RAW images (reduces performance)
+      PHOTOPRISM_JPEG_QUALITY: 70                    # a higher value increases the quality and file size of JPEG images and thumbnails (25-100)
+      PHOTOPRISM_DETECT_NSFW: "false"                # automatically flags photos as private that MAY be offensive (requires TensorFlow)
+      PHOTOPRISM_UPLOAD_NSFW: "true"                 # allow uploads that MAY be offensive
+      
+      PHOTOPRISM_DATABASE_DRIVER: "mysql"
+      PHOTOPRISM_DATABASE_SERVER: "photos-mariadb:3306"
+      PHOTOPRISM_DATABASE_NAME: "photoprism"
+      PHOTOPRISM_DATABASE_USER: "photoprism"
+      PHOTOPRISM_DATABASE_PASSWORD: "insecure"
+
+      PHOTOPRISM_SITE_CAPTION: "Joe's memory"
+      PHOTOPRISM_SITE_DESCRIPTION: "View memories at ease"
+      PHOTOPRISM_SITE_AUTHOR: "Snigdhajyoti Ghosh"
+      ## Video Transcoding (https://docs.photoprism.app/getting-started/advanced/transcoding/):
+      # PHOTOPRISM_FFMPEG_ENCODER: "software"        # H.264/AVC encoder (software, intel, nvidia, apple, raspberry, or vaapi)
+      # PHOTOPRISM_FFMPEG_SIZE: "1920"               # video size limit in pixels (720-7680) (default: 3840)
+      # PHOTOPRISM_FFMPEG_BITRATE: "32"              # video bitrate limit in Mbit/s (default: 50)
+      ## Run/install on first startup (options: update, gpu, tensorflow, davfs, clean):
+      # PHOTOPRISM_INIT: "update clean"
+      ## Run as a non-root user after initialization (supported: 0, 33, 50-99, 500-600, and 900-1200):
+      # PHOTOPRISM_UID: 1000
+      # PHOTOPRISM_GID: 1000
+      # PHOTOPRISM_UMASK: 0000
+    ## Share hardware devices with FFmpeg and TensorFlow (optional):
+    ## See: https://www.raspberrypi.com/documentation/accessories/camera.html#driver-differences-when-using-libcamera-or-the-legacy-stack
+    # devices:
+    #  - "/dev/video11:/dev/video11" # Video4Linux Video Encode Device (h264_v4l2m2m)
+    working_dir: "/photoprism"
+    volumes:
+      - /mnt/nasty/share/DCIM:/photoprism/originals
+      - photoprism_data:/photoprism/storage
+      - /var/ssl/photos.snigji.com:/photoprism/storage/config/certificates
+      - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt
+    networks:
+      default:
+        ipv4_address: 192.168.74.198
+
+  mariadb:
+    image: arm64v8/mariadb:10.11
+    container_name: photos-mariadb
+    hostname: photos-mariadb
+    restart: unless-stopped
+    stop_grace_period: 5s
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    command: --innodb-buffer-pool-size=256M --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120
+    volumes:
+      - photos_mariadb_data:/var/lib/mysql
+    environment:
+      MARIADB_AUTO_UPGRADE: "1"
+      MARIADB_INITDB_SKIP_TZINFO: "1"
+      MARIADB_DATABASE: "photoprism"
+      MARIADB_USER: "photoprism"
+      MARIADB_PASSWORD: "insecure"
+      MARIADB_ROOT_PASSWORD: "insecure"
+    networks:
+      default:
+        ipv4_address: 192.168.74.197
+
+volumes:
+  photos_mariadb_data:
+    name: photos_mariadb_data
+  photoprism_data:
+    name: photoprism_data
+
+networks:
+  default:
+    name: homelab_ipvlan_l3
+    external: true
