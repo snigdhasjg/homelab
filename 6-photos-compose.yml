@@ -5,7 +5,7 @@ services:
     image: photoprism/photoprism:231128
     container_name: photoprism
     hostname: photoprism
-    # restart: unless-stopped
+    restart: unless-stopped
     stop_grace_period: 10s
     depends_on:
       - mariadb
@@ -98,7 +98,7 @@ services:
       MARIADB_ROOT_PASSWORD: "insecure"
     networks:
       default:
-        ipv4_address: 192.168.74.197
+        ipv4_address: 192.168.74.2
 
 volumes:
   photos_mariadb_data:
