@@ -4,7 +4,7 @@ services:
   adguard_home:
     container_name: adguard_home
     hostname: adguard_home
-    image: adguard/adguardhome:v0.107.43
+    image: adguard/adguardhome:v0.107.45
     restart: unless-stopped
     volumes:
       - adguard_data:/opt/adguardhome
