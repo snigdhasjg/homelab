@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  chromium:
+    image: lscr.io/linuxserver/chromium:arm64v8-version-e29d5c9f
+    container_name: chromium
+    hostname: chromium
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: Asia/Kolkata
+      TITLE: Chromium
+      CUSTOM_PORT: 80
+      CUSTOM_HTTPS_PORT: 443
+      DRINODE: "/dev/dri/renderD128"
+    volumes:
+      - chromium_data:/config
+      - /var/ssl/chromium.snigji.com/ssl.crt.pem:/config/ssl/cert.pem:ro
+      - /var/ssl/chromium.snigji.com/ssl.key.pem:/config/ssl/cert.key:ro
+      - /var/ssl/ca/ca.crt.pem:/config/ssl/ca.pem:ro
+      - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt:ro
+    devices:
+      - /dev/dri:/dev/dri
+    shm_size: "1gb"
+    restart: unless-stopped
+    networks:
+      default:
+        ipv4_address: 192.168.74.197
+
+volumes:
+  chromium_data:
+    name: chromium_data
+
+networks:
+  default:
+    name: homelab_ipvlan_l3
+    external: true

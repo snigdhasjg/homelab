@@ -9,8 +9,8 @@ services:
       - jellyfin_config:/config
       - jellyfin_cache:/cache
       - /mnt/nasty/share/media:/media
-      - /var/ssl/media.snigji.com:/var/ssl/cert
-      - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt
+      - /var/ssl/media.snigji.com:/var/ssl/cert:ro
+      - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt:ro
     restart: unless-stopped
     healthcheck:
       test: ["NONE"]
@@ -30,8 +30,8 @@ services:
     volumes:
       - qbittorrent_config:/config
       - /mnt/nasty/share/media:/downloads
-      - /var/ssl/torrent.snigji.com:/var/ssl/cert
-      - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt
+      - /var/ssl/torrent.snigji.com:/var/ssl/cert:ro
+      - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt:ro
     restart: unless-stopped
     networks:
       default:

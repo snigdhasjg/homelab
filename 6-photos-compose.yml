@@ -71,8 +71,8 @@ services:
     volumes:
       - /mnt/nasty/share/DCIM:/photoprism/originals
       - photoprism_data:/photoprism/storage
-      - /var/ssl/photos.snigji.com:/photoprism/storage/config/certificates
-      - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt
+      - /var/ssl/photos.snigji.com:/photoprism/storage/config/certificates:ro
+      - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt:ro
     networks:
       default:
         ipv4_address: 192.168.74.198
