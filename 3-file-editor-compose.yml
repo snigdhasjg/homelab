@@ -17,7 +17,6 @@ services:
       - portainer_data:/srv/portainer
       - jellyfin_config:/srv/jellyfin
       - qbittorrent_config:/srv/qbittorrent
-      - cloudbeaver_workspace:/srv/cloudbeaver
     command:
       - "-d"
       - "/data/database.db"
@@ -53,8 +52,6 @@ volumes:
     name: filebrowser_data
   filebrowser_srv:
     name: filebrowser_srv
-  cloudbeaver_workspace:
-    name: cloudbeaver_workspace
 
 networks:
   default:
