@@ -31,12 +31,16 @@ services:
           read only = no
           browseable = yes
     volumes:
-      # - /etc/avahi/services/:/external/avahi
+      - avahi_daemon_data:/etc/avahi
       # NAS Mount
       - /mnt/nasty/share:/shares
     networks:
       default:
         ipv4_address: 192.168.74.194
+
+volumes:
+  avahi_daemon_data:
+    name: avahi_daemon_data
 
 networks:
   default:
