@@ -17,7 +17,6 @@ services:
       - portainer_data:/srv/portainer
       - jellyfin_config:/srv/jellyfin
       - qbittorrent_config:/srv/qbittorrent
-      - avahi_daemon_data:/srv/avahi_daemon
     command:
       - "-d"
       - "/data/database.db"
@@ -48,9 +47,6 @@ volumes:
     external: true
   qbittorrent_config:
     name: qbittorrent_config
-    external: true
-  avahi_daemon_data:
-    name: avahi_daemon_data
     external: true
   filebrowser_data:
     name: filebrowser_data
