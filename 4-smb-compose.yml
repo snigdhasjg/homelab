@@ -14,9 +14,9 @@ services:
 
       SAMBA_CONF_LOG_LEVEL: 3
 
-      # WSDD2_DISABLE: 1
-      # AVAHI_DISABLE: 1
-      # NETBIOS_DISABLE: 1
+      WSDD2_DISABLE: 1
+      AVAHI_DISABLE: 1
+      NETBIOS_DISABLE: 1
 
       # docker run -ti --rm --entrypoint create-hash.sh ghcr.io/servercontainers/samba:latest
       ACCOUNT_joe: "joe:1000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:FF2B2E1BFE0F0BA9E5DAA224D2A98C4D:[U          ]:LCT-65B90279:"
@@ -31,16 +31,11 @@ services:
           read only = no
           browseable = yes
     volumes:
-      - avahi_daemon_data:/etc/avahi
       # NAS Mount
       - /mnt/nasty/share:/shares
     networks:
       default:
         ipv4_address: 192.168.74.194
-
-volumes:
-  avahi_daemon_data:
-    name: avahi_daemon_data
 
 networks:
   default:
