@@ -45,12 +45,12 @@ services:
       default:
         ipv4_address: 192.168.74.195
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:arm64v8-4.6.3
+    image: lscr.io/linuxserver/qbittorrent:4.6.5-libtorrentv1
     container_name: qbittorrent
     hostname: torrent.home
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=0
+      - PGID=0
       - TZ=Asia/Kolkata
       - WEBUI_PORT=443
       - TORRENTING_PORT=6881
