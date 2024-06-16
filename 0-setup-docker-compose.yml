@@ -3,21 +3,21 @@ version: "3.9"
 services:
   portainer:
     container_name: portainer
-    hostname: portainer
+    hostname: docker.home
     image: portainer/portainer-ce:2.20.1
     restart: always
     volumes:
       - portainer_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
-      - /var/ssl/docker.snigji.com:/var/ssl/cert:ro
+      - letsencrypt_data:/etc/letsencrypt:ro
     command:
       - "--http-disabled"
       - "--bind-https"
       - ":443"
       - "--sslcert"
-      - "/var/ssl/cert/ssl.crt.pem"
+      - "/etc/letsencrypt/live/home.snigji.com/fullchain.pem"
       - "--sslkey"
-      - "/var/ssl/cert/ssl.key.pem"
+      - "/etc/letsencrypt/live/home.snigji.com/privkey.pem"
     networks:
       default:
         ipv4_address: 192.168.74.192
@@ -25,6 +25,8 @@ services:
 volumes:
   portainer_data:
     name: portainer_data
+  letsencrypt_data:
+    name: letsencrypt_data
 
 networks:
   default:

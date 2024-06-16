@@ -98,7 +98,7 @@ services:
       MARIADB_ROOT_PASSWORD: "insecure"
     networks:
       default:
-        ipv4_address: 192.168.74.2
+        ipv4_address: 192.168.74.3
 
 volumes:
   photos_mariadb_data:

@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  certbot:
+    container_name: certbot
+    hostname: certbot.home
+    image: certbot/dns-cloudflare:v2.11.0
+    volumes:
+      - /var/ssl/certbot:/var/ssl/certbot:ro
+      - letsencrypt_data:/etc/letsencrypt
+    command:
+      - certonly
+      - --non-interactive
+      - --agree-tos
+      - --register-unsafely-without-email
+      - --dns-cloudflare
+      - --dns-cloudflare-credentials
+      - /var/ssl/certbot/cloudflare.ini
+      - --dns-cloudflare-propagation-seconds
+      - "60"
+      - -d
+      - "home.snigji.com"
+      - -d
+      - "*.home.snigji.com"
+    networks:
+      default:
+        ipv4_address: 192.168.74.2
+
+volumes:
+  letsencrypt_data:
+    name: letsencrypt_data
+
+networks:
+  default:
+    name: homelab_ipvlan_l3
+    external: true
