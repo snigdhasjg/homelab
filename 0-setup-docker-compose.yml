@@ -27,6 +27,7 @@ volumes:
     name: portainer_data
   letsencrypt_data:
     name: letsencrypt_data
+    external: true
 
 networks:
   default:

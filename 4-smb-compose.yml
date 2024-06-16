@@ -3,7 +3,7 @@ version: "3.9"
 services:
   samba:
     container_name: samba
-    hostname: NASty
+    hostname: nas.home
     image: ghcr.io/servercontainers/samba:latest
     restart: unless-stopped
     cap_add:

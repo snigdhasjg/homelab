@@ -40,6 +40,7 @@ volumes:
     name: bind_config
   letsencrypt_data:
     name: letsencrypt_data
+    external: true
 
 networks:
   default:

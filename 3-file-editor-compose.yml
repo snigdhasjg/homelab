@@ -3,13 +3,12 @@ version: "3.9"
 services:
   filebrowser:
     container_name: filebrowser
-    hostname: filebrowser
+    hostname: file.home
     image: filebrowser/filebrowser:v2.27.0
     restart: unless-stopped
     volumes:
       - filebrowser_data:/data
-      - /var/ssl/file.snigji.com:/var/ssl/cert:ro
-      - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt
+      - letsencrypt_data:/etc/letsencrypt:ro
       # Mount more volume on /srv to edit
       - filebrowser_srv:/srv
       - bind_config:/srv/bind9
@@ -17,13 +16,14 @@ services:
       - portainer_data:/srv/portainer
       - jellyfin_config:/srv/jellyfin
       - qbittorrent_config:/srv/qbittorrent
+      - letsencrypt_data:/srv/letsencrypt_data:ro
     command:
       - "-d"
       - "/data/database.db"
       - "-t"
-      - "/var/ssl/cert/ssl.crt.pem"
+      - "/etc/letsencrypt/live/home.snigji.com/fullchain.pem"
       - "-k"
-      - "/var/ssl/cert/ssl.key.pem"
+      - "/etc/letsencrypt/live/home.snigji.com/privkey.pem"
       - "-p"
       - "443"
     healthcheck:
@@ -47,6 +47,9 @@ volumes:
     external: true
   qbittorrent_config:
     name: qbittorrent_config
+    external: true
+  letsencrypt_data:
+    name: letsencrypt_data
     external: true
   filebrowser_data:
     name: filebrowser_data

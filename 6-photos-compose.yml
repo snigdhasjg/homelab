@@ -4,7 +4,7 @@ services:
   photoprism:
     image: photoprism/photoprism:231128
     container_name: photoprism
-    hostname: photoprism
+    hostname: photos.home
     restart: unless-stopped
     stop_grace_period: 10s
     depends_on:
@@ -18,12 +18,12 @@ services:
       PHOTOPRISM_ADMIN_PASSWORD: "insecure"
       PHOTOPRISM_AUTH_MODE: "password"
 
-      PHOTOPRISM_SITE_URL: "https://photos.snigji.com/"
+      PHOTOPRISM_SITE_URL: "https://photos.home.snigji.com/"
       PHOTOPRISM_HTTP_PORT: 443
       PHOTOPRISM_DISABLE_TLS: "false"
-      PHOTOPRISM_DEFAULT_TLS: "false"
-      PHOTOPRISM_TLS_CERT: "ssl.crt.pem"
-      PHOTOPRISM_TLS_KEY: "ssl.key.pem"
+      PHOTOPRISM_DEFAULT_TLS: "true"
+      PHOTOPRISM_TLS_CERT: "/etc/letsencrypt/live/home.snigji.com/fullchain.pem"
+      PHOTOPRISM_TLS_KEY: "/etc/letsencrypt/live/home.snigji.com/privkey.pem"
 
       PHOTOPRISM_ORIGINALS_LIMIT: 5000               # file size limit for originals in MB (increase for high-res video)
       PHOTOPRISM_HTTP_COMPRESSION: "gzip"            # improves transfer speed and bandwidth utilization (none or gzip)
@@ -45,7 +45,7 @@ services:
       PHOTOPRISM_UPLOAD_NSFW: "true"                 # allow uploads that MAY be offensive
       
       PHOTOPRISM_DATABASE_DRIVER: "mysql"
-      PHOTOPRISM_DATABASE_SERVER: "photos-mariadb:3306"
+      PHOTOPRISM_DATABASE_SERVER: "photos-db.home:3306"
       PHOTOPRISM_DATABASE_NAME: "photoprism"
       PHOTOPRISM_DATABASE_USER: "photoprism"
       PHOTOPRISM_DATABASE_PASSWORD: "insecure"
@@ -71,8 +71,7 @@ services:
     volumes:
       - /mnt/nasty/share/DCIM:/photoprism/originals
       - photoprism_data:/photoprism/storage
-      - /var/ssl/photos.snigji.com:/photoprism/storage/config/certificates:ro
-      - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt:ro
+      - letsencrypt_data:/etc/letsencrypt:ro
     networks:
       default:
         ipv4_address: 192.168.74.198
@@ -80,7 +79,7 @@ services:
   mariadb:
     image: arm64v8/mariadb:10.11
     container_name: photos-mariadb
-    hostname: photos-mariadb
+    hostname: photos-db.home
     restart: unless-stopped
     stop_grace_period: 5s
     security_opt:
@@ -98,13 +97,16 @@ services:
       MARIADB_ROOT_PASSWORD: "insecure"
     networks:
       default:
-        ipv4_address: 192.168.74.3
+        ipv4_address: 192.168.74.4
 
 volumes:
   photos_mariadb_data:
     name: photos_mariadb_data
   photoprism_data:
     name: photoprism_data
+  letsencrypt_data:
+    name: letsencrypt_data
+    external: true
 
 networks:
   default:

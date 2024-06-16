@@ -4,7 +4,7 @@ services:
   chromium:
     image: lscr.io/linuxserver/chromium:arm64v8-version-e29d5c9f
     container_name: chromium
-    hostname: chromium
+    hostname: chromium.home
     security_opt:
       - seccomp:unconfined #optional
     environment:
@@ -17,10 +17,7 @@ services:
       DRINODE: "/dev/dri/renderD128"
     volumes:
       - chromium_data:/config
-      - /var/ssl/chromium.snigji.com/ssl.crt.pem:/config/ssl/cert.pem:ro
-      - /var/ssl/chromium.snigji.com/ssl.key.pem:/config/ssl/cert.key:ro
-      - /var/ssl/ca/ca.crt.pem:/config/ssl/ca.pem:ro
-      - /var/ssl/ca/ca.crt.pem:/usr/local/share/ca-certificates/ca.crt:ro
+      - letsencrypt_data:/etc/letsencrypt:ro
     devices:
       - /dev/dri:/dev/dri
     shm_size: "1gb"
@@ -32,6 +29,9 @@ services:
 volumes:
   chromium_data:
     name: chromium_data
+  letsencrypt_data:
+    name: letsencrypt_data
+    external: true
 
 networks:
   default:
