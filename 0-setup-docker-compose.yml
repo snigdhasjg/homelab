@@ -4,7 +4,7 @@ services:
   portainer:
     container_name: portainer
     hostname: docker.home
-    image: portainer/portainer-ce:2.20.1
+    image: portainer/portainer-ce:2.20.3
     restart: always
     volumes:
       - portainer_data:/data
