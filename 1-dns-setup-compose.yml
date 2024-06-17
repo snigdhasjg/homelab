@@ -10,7 +10,6 @@ services:
     environment:
       DOMAIN: test.snigji.com
       NAMESERVER: "192.168.74.201"
-      REFRESH_INTERVAL: 300
       DNS_RECORD_TTL: 300
       TSIG_NAME: test
     env_file: "stack.env" # TSIG_KEY env var comes from here
