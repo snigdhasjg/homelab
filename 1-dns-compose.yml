@@ -4,6 +4,8 @@ services:
   adguard_home:
     container_name: adguard_home
     hostname: adguard
+    labels:
+      nl.mtak.docker-nsupdate-ddns.hostname: adguard
     image: adguard/adguardhome:v0.107.48
     restart: unless-stopped
     volumes:

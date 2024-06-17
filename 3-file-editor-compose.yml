@@ -4,6 +4,8 @@ services:
   filebrowser:
     container_name: filebrowser
     hostname: file
+    labels:
+      nl.mtak.docker-nsupdate-ddns.hostname: file
     image: filebrowser/filebrowser:v2.27.0
     restart: unless-stopped
     volumes:

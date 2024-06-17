@@ -34,6 +34,8 @@ services:
         condition: service_completed_successfully
     container_name: jellyfin
     hostname: media
+    labels:
+      nl.mtak.docker-nsupdate-ddns.hostname: media
     image: jellyfin/jellyfin:10.8.13-1
     volumes:
       - jellyfin_config:/config
@@ -50,6 +52,8 @@ services:
     image: lscr.io/linuxserver/qbittorrent:4.6.5-libtorrentv1
     container_name: qbittorrent
     hostname: torrent
+    labels:
+      nl.mtak.docker-nsupdate-ddns.hostname: torrent
     environment:
       - PUID=0
       - PGID=0

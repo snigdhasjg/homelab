@@ -5,6 +5,8 @@ services:
     image: photoprism/photoprism:231128
     container_name: photoprism
     hostname: photos
+    labels:
+      nl.mtak.docker-nsupdate-ddns.hostname: photos
     restart: unless-stopped
     stop_grace_period: 10s
     depends_on:
@@ -45,7 +47,7 @@ services:
       PHOTOPRISM_UPLOAD_NSFW: "true"                 # allow uploads that MAY be offensive
       
       PHOTOPRISM_DATABASE_DRIVER: "mysql"
-      PHOTOPRISM_DATABASE_SERVER: "photos-db.home:3306"
+      PHOTOPRISM_DATABASE_SERVER: "photos-db:3306"
       PHOTOPRISM_DATABASE_NAME: "photoprism"
       PHOTOPRISM_DATABASE_USER: "photoprism"
       PHOTOPRISM_DATABASE_PASSWORD: "insecure"

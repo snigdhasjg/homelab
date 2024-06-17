@@ -4,6 +4,8 @@ services:
   portainer:
     container_name: portainer
     hostname: docker
+    labels:
+      nl.mtak.docker-nsupdate-ddns.hostname: docker
     image: portainer/portainer-ce:2.20.3
     restart: always
     volumes:
