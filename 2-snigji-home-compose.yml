@@ -3,21 +3,25 @@ version: "3.9"
 services:
   cloudflare-tunnel:
     container_name: cloudflare-tunnel
-    hostname: cloudflare-tunnel.home
+    hostname: cloudflare-tunnel
+    labels:
+      nl.mtak.docker-nsupdate-ddns.ignore: true
     image: cloudflare/cloudflared:latest
     restart: unless-stopped
     command:
       - tunnel
       - --no-autoupdate
       - run
-    env_file: "stack.env"
+    env_file: "stack.env" # TUNNEL_TOKEN env var comes from here
     networks:
       default:
         ipv4_address: 192.168.74.5
 
   snigji-home:
     container_name: snigji-home
-    hostname: snigji-home.home
+    hostname: snigji-home
+    labels:
+      nl.mtak.docker-nsupdate-ddns.ignore: true
     image: macabrequinox/snigji:latest
     restart: unless-stopped
     networks:

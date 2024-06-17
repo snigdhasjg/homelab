@@ -3,7 +3,7 @@ version: "3.9"
 services:
   portainer:
     container_name: portainer
-    hostname: docker.home
+    hostname: docker
     image: portainer/portainer-ce:2.20.3
     restart: always
     volumes:

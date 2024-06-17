@@ -3,7 +3,9 @@ version: "3.9"
 services:
   certbot:
     container_name: certbot
-    hostname: certbot.home
+    hostname: certbot
+    labels:
+      nl.mtak.docker-nsupdate-ddns.ignore: true
     image: certbot/dns-cloudflare:v2.11.0
     volumes:
       - /var/ssl/certbot:/var/ssl/certbot:ro

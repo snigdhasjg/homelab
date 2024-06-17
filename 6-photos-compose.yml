@@ -4,7 +4,7 @@ services:
   photoprism:
     image: photoprism/photoprism:231128
     container_name: photoprism
-    hostname: photos.home
+    hostname: photos
     restart: unless-stopped
     stop_grace_period: 10s
     depends_on:
@@ -79,7 +79,9 @@ services:
   mariadb:
     image: arm64v8/mariadb:10.11
     container_name: photos-mariadb
-    hostname: photos-db.home
+    hostname: photos-db
+    labels:
+      nl.mtak.docker-nsupdate-ddns.ignore: true
     restart: unless-stopped
     stop_grace_period: 5s
     security_opt:

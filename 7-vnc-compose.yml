@@ -4,7 +4,7 @@ services:
   chromium:
     image: lscr.io/linuxserver/chromium:arm64v8-version-e29d5c9f
     container_name: chromium
-    hostname: chromium.home
+    hostname: chromium
     security_opt:
       - seccomp:unconfined #optional
     environment:

@@ -3,7 +3,7 @@ version: "3.9"
 services:
   adguard_home:
     container_name: adguard_home
-    hostname: adguard.home
+    hostname: adguard
     image: adguard/adguardhome:v0.107.48
     restart: unless-stopped
     volumes:
@@ -15,7 +15,9 @@ services:
 
   bind9:
     container_name: bind9
-    hostname: bind9.home
+    hostname: bind9
+    labels:
+      nl.mtak.docker-nsupdate-ddns.ignore: true
     image: ubuntu/bind9:9.18-23.10_edge
     restart: unless-stopped
     environment:
