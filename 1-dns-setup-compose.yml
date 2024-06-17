@@ -8,14 +8,10 @@ services:
       nl.mtak.docker-nsupdate-ddns.ignore: true
     image: macabrequinox/docker-nsupdate-ddns:latest
     environment:
-      DOCKER_SOCKET: /var/run/docker.sock
       DOMAIN: test.snigji.com
-      IGNORE_LABEL: nl.mtak.docker-nsupdate-ddns.ignore
-      HOSTNAME_LABEL: nl.mtak.docker-nsupdate-ddns.hostname
-      DEFAULT_NETWORK: 192.168.74.0/24
-      REFRESH_INTERVAL: 30
-      ONE_SHOT: "False"
       NAMESERVER: "192.168.74.201"
+      REFRESH_INTERVAL: 300
+      DNS_RECORD_TTL: 300
       TSIG_NAME: test
     env_file: "stack.env" # TSIG_KEY env var comes from here
     volumes:
