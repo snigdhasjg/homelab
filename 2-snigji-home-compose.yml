@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  cloudflare-tunnel:
+    container_name: cloudflare-tunnel
+    hostname: cloudflare-tunnel.home
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command:
+      - tunnel
+      - --no-autoupdate
+      - run
+    env_file: "stack.env"
+    networks:
+      default:
+        ipv4_address: 192.168.74.5
+
+  snigji-home:
+    container_name: snigji-home
+    hostname: snigji-home.home
+    image: macabrequinox/snigji:latest
+    restart: unless-stopped
+    networks:
+      default:
+        ipv4_address: 192.168.74.6
+
+networks:
+  default:
+    name: homelab_ipvlan_l3
+    external: true
